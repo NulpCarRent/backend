@@ -52,3 +52,19 @@ class Request(models.Model):
 
     def get_absolute_url(self):
         return reverse("Request_detail", kwargs={"pk": self.pk})
+
+
+class Fine(models.Model):
+
+    client = models.ForeignKey(Client, models.CASCADE, related_name='fines', default=None, null=True)
+    amount = models.FloatField(default=None, null=True)
+
+    class Meta:
+        verbose_name = "Request"
+        verbose_name_plural = "Requests"
+
+    def __str__(self):
+        return self.client.name
+
+    def get_absolute_url(self):
+        return reverse("Fine_detail", kwargs={"pk": self.pk})

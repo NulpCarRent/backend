@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Auto, Client, Request
+from api.models import Auto, Client, Request, Fine
 
 class AutoSerializer(serializers.ModelSerializer):
     
@@ -19,3 +19,8 @@ class RequestSerializer(serializers.ModelSerializer):
         model = Request
         fields = '__all__'
 
+class FineSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Fine
+        fields = '__all__'
