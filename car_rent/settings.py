@@ -128,3 +128,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# ===== Azure =====
+AZURE_ACCOUNT_NAME = 'carrent'
+AZURE_ACCOUNT_KEY = 'OpW+mkY7ryiyrfGjHog7ohA512k63gWrmjkZ19bXtNji8ak9KaVQYwDvkDgqhEVK1TI75ZWsUi855w6wv7auDw=='
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+AZURE_LOCATION = 'carrent'
+AZURE_CONTAINER = 'carrent'
+
+
+STATIC_LOCATION = 'static'
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+
+STATICFILES_STORAGE = 'car_rent.azure_storage.AzureMediaStorage'
+DEFAULT_FILE_STORAGE = 'car_rent.azure_storage.AzureMediaStorage'
