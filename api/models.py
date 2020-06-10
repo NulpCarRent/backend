@@ -41,6 +41,7 @@ class Request(models.Model):
     auto = models.ForeignKey(Auto, models.CASCADE, related_name='request_autos', default=None, null=True)
     rent_date = models.DateField(default=None, null=True)
     due_date = models.DateField(default=None, null=True)
+    first_payment = models.FloatField(default=0.0, null=True)
 
 
     class Meta:
