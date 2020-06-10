@@ -24,6 +24,7 @@ class Auto(models.Model):
     release_year = models.IntegerField(default=2000, null=True)
     price = models.IntegerField(default=0, null=True)
     picture = models.ImageField(default='default.png', upload_to='pictures')
+    available = models.BooleanField(default=True, null=True)
 
     class Meta:
         verbose_name = "Auto"

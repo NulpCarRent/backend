@@ -24,6 +24,7 @@ class RequestSerializer(serializers.ModelSerializer):
         client = validated_data.get('renter')
 
         auto.renter = client
+        auto.available = False
         auto.save()
 
         return super().create(validated_data)

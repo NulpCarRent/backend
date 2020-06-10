@@ -3,12 +3,26 @@ from rest_framework import viewsets
 from api.models import Auto, Client, Request, Fine
 from api.serializers import AutoSerializer, ClientSerializer, RequestSerializer, FineSerializer
 from rest_framework.filters import SearchFilter, OrderingFilter
+# from api.filters import AutoPriceFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 class AutoViewSet(viewsets.ModelViewSet):
     queryset = Auto.objects.all()
     serializer_class = AutoSerializer
-    filter_backends = (SearchFilter, OrderingFilter)
-    search_fields = ('name', 'price', 'release_year')
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['price', 'available']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        price_min = self.request.query_params.get('price_min')
+        price_max = self.request.query_params.get('price_max')
+
+        if price_min:
+            queryset = queryset.filter(price__gte=price_min)
+        if price_max:
+            queryset = queryset.filter(price__lte=price_max)
+
+        return queryset
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
