@@ -2,10 +2,13 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from api.models import Auto, Client, Request, Fine
 from api.serializers import AutoSerializer, ClientSerializer, RequestSerializer, FineSerializer
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 class AutoViewSet(viewsets.ModelViewSet):
     queryset = Auto.objects.all()
     serializer_class = AutoSerializer
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('name', 'price', 'release_year')
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
