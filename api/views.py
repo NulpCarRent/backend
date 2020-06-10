@@ -3,8 +3,6 @@ from rest_framework import viewsets
 from api.models import Auto, Client, Request, Fine
 from api.serializers import AutoSerializer, ClientSerializer, RequestSerializer, FineSerializer
 from rest_framework.filters import SearchFilter, OrderingFilter
-# from api.filters import AutoPriceFilter
-from django_filters.rest_framework import DjangoFilterBackend
 
 class AutoViewSet(viewsets.ModelViewSet):
     queryset = Auto.objects.all()
