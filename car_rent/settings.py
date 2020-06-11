@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ksr3l2^z*sep)rbn5@v8ny3nyoh2v8_zzx3s!2xq2-pt+q(jl!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
@@ -90,11 +91,11 @@ DATABASES = {
     }
 }
 
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    )
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_RENDERER_CLASSES': (
+#         'rest_framework.renderers.JSONRenderer',
+#     )
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -135,15 +136,33 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # ===== Azure =====
-AZURE_ACCOUNT_NAME = 'carrent'
-AZURE_ACCOUNT_KEY = 'OpW+mkY7ryiyrfGjHog7ohA512k63gWrmjkZ19bXtNji8ak9KaVQYwDvkDgqhEVK1TI75ZWsUi855w6wv7auDw=='
-AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
-AZURE_LOCATION = 'carrent'
-AZURE_CONTAINER = 'carrent'
+with open('storage_config.json', 'r') as f:
+    config = json.load(f)
+
+if config['storage_id'] == 0:
+    AZURE_ACCOUNT_NAME = 'carrent'
+    AZURE_ACCOUNT_KEY = 'OpW+mkY7ryiyrfGjHog7ohA512k63gWrmjkZ19bXtNji8ak9KaVQYwDvkDgqhEVK1TI75ZWsUi855w6wv7auDw=='
+    AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+    AZURE_LOCATION = 'carrent'
+    AZURE_CONTAINER = 'carrent'
 
 
-STATIC_LOCATION = 'static'
-STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+    STATIC_LOCATION = 'static'
+    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
 
-STATICFILES_STORAGE = 'car_rent.azure_storage.AzureMediaStorage'
-DEFAULT_FILE_STORAGE = 'car_rent.azure_storage.AzureMediaStorage'
+    STATICFILES_STORAGE = 'car_rent.azure_storage.AzureMediaStorage'
+    DEFAULT_FILE_STORAGE = 'car_rent.azure_storage.AzureMediaStorage'
+
+elif config['storage_id'] == 1:
+    AZURE_ACCOUNT_NAME = 'carrentprivate'
+    AZURE_ACCOUNT_KEY = 'qcQuJPhwzJd6Y+DOocGy3mik+51w2u7clmtGAa06Ny+0sk24YiofKE9/X0svFHQoneNE8PCc+zyeDePae1dbtg=='
+    AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+    AZURE_LOCATION = 'carrentprivate'
+    AZURE_CONTAINER = 'carrentprivate'
+
+
+    STATIC_LOCATION = 'static'
+    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+
+    STATICFILES_STORAGE = 'car_rent.azure_storage.AzureMediaStorage'
+    DEFAULT_FILE_STORAGE = 'car_rent.azure_storage.AzureMediaStorage'
